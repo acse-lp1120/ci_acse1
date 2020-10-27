@@ -1,8 +1,9 @@
-name: Flake8
+name: Flake8 #name appears on the actions tab of the repositories github webpage
 
 on:
    # Trigger the workflow on push or pull request,
    # but only for the main branch
+   # could just use push without specifying a branch, so all changes are pushed to all branches
    push:
      branches:
        - main
@@ -10,21 +11,21 @@ on:
      branches:
        - main
 
-jobs:
-  flake8:
+jobs: #starting the workflow, where jobs run in parallel by default
+  flake8: #only a single job, named flake8
 
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python 3.7
+    - uses: actions/checkout@v2 #Action to be performed, checkout action clones the repository of interest onto the github runner
+    - name: Set up Python 3.7 #Name means this actions steps will appear with this name, in the logs
       uses: actions/setup-python@v1
       with:
         python-version: 3.7
     - name: Install dependencies
-      run: |
+      run: | #Use the bar to indicate multi line commands, Check code is pep8 compliant
         python -m pip install --upgrade pip
-        pip install flake8
+        pip install flake8 
     - name: Lint with flake8
       run: |
         flake8 --builtins=ArgumentError .
